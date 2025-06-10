@@ -902,6 +902,7 @@ if __name__ == "__main__":
 
 from flask import Flask
 import threading
+import os
 
 app = Flask('')
 
@@ -910,7 +911,8 @@ def home():
     return "Bot đang chạy!"
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    port = int(os.environ.get("PORT", 10000))  # 👈 Render sẽ cung cấp PORT đúng
+    app.run(host='0.0.0.0', port=port)
 
 t = threading.Thread(target=run)
 t.start()
