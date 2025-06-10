@@ -23,13 +23,13 @@ THỜI_GIAN_CHỜ = timedelta(seconds=300)
 FREE_GIỚI_HẠN_CHIA_SẺ = 400
 VIP_GIỚI_HẠN_CHIA_SẺ = 1000
 viptime = 100
-ALLOWED_GROUP_ID = -6466960858   # ID BOX
+ALLOWED_GROUP_ID = -1002695641412   # ID BOX
 admin_diggory = "ANH ĐỨC PC" # ví dụ : để user name admin là @diggory347 bỏ dấu @ đi là đc
 name_bot = "ANH ĐỨC PC. 🖥"
 zalo = "0815689536"
 web = "no"
 facebook = "no"
-allowed_group_id = -4269071081 # ID BOX
+allowed_group_id = -7307387052 # ID BOX
 users_keys = {}
 key = ""
 freeuser = []
@@ -511,7 +511,7 @@ def laykey(message):
     key = str(hash_object.hexdigest())[:10]
     print(key)
     
-    url_key = requests.get(f'https://link4m.co/api-shorten/v2?api=67e6bf7c10106250256cb43f&url=http://keyvipfree.byethost4.com/?r={key}').json()['shortenedUrl']
+    url_key = requests.get(f'https://link4m.co/api-shorten/v2?api=67e6bf7c10106250256cb43f&url=https://laykey.totalh.net/?r={key}').json()['shortenedUrl']
     
     text = f'''
 - KEY CỦA BẠN {get_time_vietnam()}
@@ -545,7 +545,7 @@ def key(message):
         freeuser.append(user_id)
         bot.reply_to(message, 'KEY ĐÚNG BẠN CÓ THỂ TIẾP TỤC SỬ DỤNG LỆNH')
     else:
-        bot.reply_to(message, 'KEY SAI R GET LẠI THỬ XEM HOẶC IB CHO ADMIN')
+        bot.reply_to(message, 'KEY SAI lVUI LÒNG VƯỢT LINK LẠI HOẶC IB CHO ADMIN')
 
 
 @bot.message_handler(commands=['unadmod'])
@@ -624,14 +624,11 @@ def send_welcome(message):
 │» /admin : THÔNG TIN ADMIN
 │» /spam : TẤN CÔNG SMS FREE
 │» /spamvip : Spam SMS VIP LIÊN HỆ ADMIN ĐỂ MUA 10K/THÁNG
-│» /share : NHẬN FREE VIP
-│» /laykey :LẤY KEY VIP FREE
-│» /KEY NHẬP KEY VIP FREE
+│» /laykey :LẤY KEY VIP HÔM NAY
+│» /key NHẬP KEY VIP FREE
 │» /id : LẤY ID TELE CỦA ACC
-│» /tiktok : CHECK THÔNG TIN TẢI VIDEO TOPTOP
 │» /time : THỜI GIAN HOẠT ĐỘNG
 │» /ad : THÊM ADMIN
-│» /code : LẤY CODE HTML CỦA WEP
 │» /tv : ĐỔI NGÔN NGỮ SANG TIẾNG VIỆT 
 │» LỆNH ADMIN
 │» /restart : KHỞI ĐỘNG LẠI BOT
@@ -677,8 +674,7 @@ def spam(message):
         return
 
     last_usage[user_id] = current_time
-
-    # Phân tích cú pháp lệnh
+# Phân tích cú pháp lệnh
     params = message.text.split()[1:]
     if len(params) != 2:
         bot.reply_to(message, "/spam VD_SĐT_ 012345678 9  TRONG ĐÓ 9 LÀ SỐ LẦN SPAM ")
@@ -692,19 +688,20 @@ def spam(message):
 
     count = int(count)
 
-    if count > 5:
-        bot.reply_to(message, "/spam sdt số_lần tối đa là 5 - đợi 100giây sử dụng lại.")
+    if count > 10:
+        bot.reply_to(message, "/spam TỐI ĐA 10 LẦN - đợi 100giây sử dụng lại.")
         return
 
     if sdt in blacklist:
         bot.reply_to(message, f"Số điện thoại {sdt} đã bị cấm spam.")
         return
 
+    hidden_sdt = sdt[:3] + "*" * (len(sdt) - 3) + sdt[-2:]
     diggory_chat3 = f'''
 ┌──────⭓ {name_bot}
 │ SPAM: THÀNH CÔNG
 │ SỐ LẦN TẤN CÔNG FREE: {count}
-│ĐANG TẤN CÔNG : {sdt}
+│ĐANG TẤN CÔNG : {hidden_sdt}
 │ TẤN CÔNG FREE 5-10P 
 │ SPAM VỪA PHẢI ĐỂ ỔN ĐỊNH BOT NHÉ  
 └─────────────
@@ -738,7 +735,7 @@ def spam(message):
 
 blacklist = ["112", "113", "114", "115", "116", "117", "118", "119", "0", "1", "2", "3", "4"]
 
-
+video_url = 'https://v16m-default.akamaized.net/b7650db4ac7f717b7be6bd6a04777a0d/66a418a5/video/tos/useast2a/tos-useast2a-ve-0068-euttp/o4QTIgGIrNbkAPGKKLKteXyLedLE7IEgeSzeE2/?a=0&bti=OTg7QGo5QHM6OjZALTAzYCMvcCMxNDNg&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=2576&bt=1288&cs=0&ds=6&ft=XE5bCqT0majPD12cy-773wUOx5EcMeF~O5&mime_type=video_mp4&qs=0&rc=Mzk1OzY7PGdpZjxkOTQ3M0Bpajh1O2w5cmlzbzMzZjgzM0AuNWJgLi02NjMxLzBgXjUyYSNzNmptMmRjazFgLS1kL2Nzcw%3D%3D&vvpl=1&l=202407261543513F37EAD38E23B6263167&btag=e00088000'
 # Xử lý lệnh /spamvip
 @bot.message_handler(commands=['spamvip'])
 def supersms(message):
@@ -753,9 +750,8 @@ def supersms(message):
         return
     
     last_usage[user_id] = current_time
-
+    
     params = message.text.split()[1:]
-
     if len(params) != 2:
         bot.reply_to(message, "/spamvip VD_SĐT 012345678 9 TRONG ĐÓ 9 LÀ SỐ LẦN SPAM ")
         return
@@ -768,19 +764,27 @@ def supersms(message):
     
     count = int(count)
     
-    if count > 30:
-        bot.reply_to(message, "/spamvip sdt 30 thôi nhé - đợi 250giây sử dụng lại.")
+    if count > 40:
+        bot.reply_to(message, "/spamvip TỐI ĐA LÀ 40 LẦN  - đợi 250giây sử dụng lại.")
         return
 
     if sdt in blacklist:
         bot.reply_to(message, f"Số điện thoại {sdt} đã bị cấm spam.")
         return
-        
+    
+    caption_text = (f'ANHDUCPC{ADMIN_NAME}')
+    bot.send_video(
+        message.chat.id,
+        video_url,
+        caption=caption_text
+    )
+    
+    hidden_sdt = sdt[:3] + "*" * (len(sdt) - 3) + sdt[-2:]
     diggory_chat3 = f'''
 ┌──────⭓ {name_bot}
 │ TẤN CÔNG: THÀNH CÔNG
-│SỐ LẦN TẤN CÔNG VIP: {count}
-│ ĐANG TẤN CÔNG : {sdt}
+│ SỐ LẦN TẤN CÔNG VIP: {count}
+│ ĐANG TẤN CÔNG : {hidden_sdt}
 │ TẤN CÔNG VIP SẼ LÂU HƠN NHÉ
 │ SPAM VỪA PHẢI THÔI NHÉ !  
 └─────────────
