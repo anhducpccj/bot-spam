@@ -3,4 +3,4 @@ aiohttp
 beautifulsoup4
 requests
 Pillow
-
+tqdm
