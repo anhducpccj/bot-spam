@@ -1,2 +1,6 @@
-flask
+pyTelegramBotAPI
+aiohttp
+beautifulsoup4
 requests
+Pillow
+
