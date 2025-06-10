@@ -1,36 +1,35 @@
 from flask import Flask, request
-import os
 import requests
+import os
 
 app = Flask(__name__)
 
-VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN", "bot123")
-PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAWZCgfCf5uYBO3Y1cAZBgJ4AzejZCoB7anIpTL6I3VYmExDQ0PuDKf0xcdxMK8PNVSZAplGUFb6pqokcYkzhA8W9GGrHYdN1l60BVqNGDQVnO2FEemAKIhUKQZAVcVW2w6uBUDFcDaqZCIDjBsZBUe0xsZBX5B1ZAusKNRBggQgOQVm0w3FhnLBQZAXrEUPBeR2vcfmTZA0rDN")
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+PAGE_ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 
-@app.route('/webhook', methods=['GET', 'POST'])
+@app.route('/webhook', methods=['GET'])
+def verify():
+    if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+        return request.args.get("hub.challenge")
+    return "Invalid verification token", 403
+
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    if request.method == 'GET':
-        token = request.args.get("hub.verify_token")
-        challenge = request.args.get("hub.challenge")
-        if token == VERIFY_TOKEN:
-            return challenge
-        return "Invalid verification token"
-    elif request.method == 'POST':
-        data = request.json
-        for entry in data.get("entry", []):
-            for msg_event in entry.get("messaging", []):
-                sender = msg_event["sender"]["id"]
-                if "message" in msg_event:
-                    text = msg_event["message"].get("text", "")
-                    reply(sender, f"Bạn nói: {text}")
-        return "ok"
+    data = request.get_json()
+    for entry in data.get('entry', []):
+        for messaging in entry.get('messaging', []):
+            sender_id = messaging['sender']['id']
+            if messaging.get('message'):
+                text = messaging['message'].get('text', '')
+                send_message(sender_id, f"Bạn vừa nói: {text}")
+    return "ok", 200
 
-def reply(recipient_id, message_text):
-    url = f"https://graph.facebook.com/v18.0/me/messages?access_token={PAGE_ACCESS_TOKEN}"
-    headers = {"Content-Type": "application/json"}
+def send_message(recipient_id, message):
+    url = f'https://graph.facebook.com/v17.0/me/messages?access_token={PAGE_ACCESS_TOKEN}'
+    headers = {'Content-Type': 'application/json'}
     payload = {
-        "recipient": {"id": recipient_id},
-        "message": {"text": message_text}
+        'recipient': {'id': recipient_id},
+        'message': {'text': message}
     }
     requests.post(url, headers=headers, json=payload)
 
