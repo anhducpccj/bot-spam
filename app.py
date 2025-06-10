@@ -899,3 +899,19 @@ def tieng_viet(message):
 if __name__ == "__main__":
     bot_active = True
     bot.infinity_polling()
+
+from flask import Flask
+import threading
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot đang chạy!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+t = threading.Thread(target=run)
+t.start()
+
