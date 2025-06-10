@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN", "bot123")
-PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAWZCgfCf5uYBO0SMCutjmu5OoXkyxvOSfDqfsxAeZAo6WtZAsddCaZBPRQSmJkdTmP84C8weZA8c1FxQMVIQnUMPQwbHkG81pQhKcvrmZBZBPalw0MiLkvqPXl0tSZAb4unDXOqvgRfAEdM6mjqTWSSZBZB6psrjVkKgyjvJor6qWSBZAr24MzXuD82dpEkqwBXTuaELG8FnNY")
+PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAWZCgfCf5uYBO3Y1cAZBgJ4AzejZCoB7anIpTL6I3VYmExDQ0PuDKf0xcdxMK8PNVSZAplGUFb6pqokcYkzhA8W9GGrHYdN1l60BVqNGDQVnO2FEemAKIhUKQZAVcVW2w6uBUDFcDaqZCIDjBsZBUe0xsZBX5B1ZAusKNRBggQgOQVm0w3FhnLBQZAXrEUPBeR2vcfmTZA0rDN")
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
